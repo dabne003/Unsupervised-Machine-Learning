@@ -120,7 +120,7 @@ Y = alltraits_pheno
 
 ##go back and add back in logthccbd removed it from all traits during code testing trying to fix!!!!
 
-#Annotate
+#Creating and saving Variance component analysis to estimate different genetic components as well as narrow and broad sense heritabilities
 VC_ALL = apply(Y, 2, function(y){FIT = BGLR(y,ETA=K2,verbose=FALSE);return(unlist(c(lapply(FIT$ETA, function(x) x$varU ),Ve=FIT$varE)))})
 VC_ALL
 write.csv(VC_ALL, file = "VC_ALL.csv")
@@ -128,13 +128,13 @@ write.csv(VC_ALL, file = "VC_ALL_cannabinoid.csv")
 write.csv(VC_ALL, file = "VC_ALL_ag.csv")
 write.csv(VC_ALL, file = "VC_ALL_alltraits.csv")
 
-#Annotate
+#Scaling and saving Variance component dataset 
 VC_ALL_SCALE = apply(VC_ALL, 2, function(x) x/sum(x) )
 VC_ALL_SCALE
 write.csv(VC_ALL_SCALE, file = "VC_ALL_SCALE_cannabinoid.csv")
 write.csv(VC_ALL_SCALE, file = "VC_ALL_SCALE_ag.csv")
 
-#plot a pie chart of heritability
+#Plot a pie chart of heritability
 pie( VC_ALL[, "a.guaiene_area"]  )
 pie( VC_ALL[, "s.guaiene_area"]  )
 pie( VC_ALL[, "Caryophyllene_area"]  )
@@ -161,7 +161,7 @@ pie( VC_ALL[, "THC.CBD"]  )
 is.numeric(terp_markers)
 anyNA(terp_markers)
 
-#Annotate making and saving
+#Making and saving K is a list of kinships; K$A is the additive, it represents what is heritable and of interest for breeding
 A = K$A
 VC_ADD = apply(Y, 2, function(y) reml(y,K=A)$VC)
 VC_ADD
@@ -169,7 +169,7 @@ write.csv(VC_ADD, file = "VC_ADD.csv")
 write.csv(VC_ADD, file = "VC_ADD_cannabinoid.csv")
 write.csv(VC_ADD, file = "VC_ADD_ag.csv")
 
-#dataset check data should be numeric
+#Dataset check data should be matrix
 class(Y)
 
 #Making and saving a correlation table 
